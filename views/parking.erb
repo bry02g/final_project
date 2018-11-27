@@ -1,0 +1,6 @@
+<h1> Parking Spots </h1>
+<% @spots.each do |spot| %>
+  <p>location: <%= spot.location %></p>
+  <p>spots left: <%= spot.lots_available %></p>
+  <p>cost: <%= spot.cost_per_lot %></p>
+<% end %>

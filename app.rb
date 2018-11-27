@@ -1,6 +1,7 @@
 require "sinatra"
 require 'sinatra/flash'
 require_relative "authentication.rb"
+require_relative "spot.rb"
 
 #the following urls are included in authentication.rb
 # GET /login
@@ -19,4 +20,33 @@ end
 get "/dashboard" do
 	authenticate!
 	erb :dashboard
+end
+
+get "/parking" do
+	@spots = Spot.all
+	erb :parking
+end
+
+get "/parking/new" do
+	erb :new
+end
+
+get "/parking/:id" do
+end
+
+get "/parking/:id/rent" do
+end
+
+
+
+post "/parking/create" do
+	if params[:location] && params[:amount] && params[:cost]
+		spot = Spot.new
+		spot.location = params[:location]
+		spot.lots_available = params[:amount]
+		spot.cost_per_lot = params[:cost]
+		spot.save
+	end
+
+	redirect "/parking"
 end
