@@ -1,7 +1,7 @@
 require "sinatra"
 require 'sinatra/flash'
 require_relative "authentication.rb"
-require_relative "spot.rb"
+
 
 #the following urls are included in authentication.rb
 # GET /login
@@ -15,41 +15,46 @@ require_relative "spot.rb"
 get "/" do
 	erb :index
 end
-
-
-get "/dashboard" do
-	authenticate!
-	erb :dashboard
-end
-
+# displays all the parking listings
 get "/parking" do
 	@spots = Spot.all
 	erb :parking
 end
 
+
 get "/parking/new" do
+	authenticate!
 	erb :new
 end
 
-get "/parking/:id" do
-	if params[:id]
-		@spot = Spot.get(params[:id].to_i)
-		erb :lot
-	end
+# displays parking lost being listed by user
+get '/parking/dashboard' do
+	authenticate!
+	@user_lots = current_user.spots
+	erb :dashboard
+end
+
+# displays a single lot
+get '/parking/:id' do
+	@spot = Spot.get(params[:id].to_i)
+	erb :lot
 end
 
 get "/parking/:id/rent" do
+	authenticate!
+	return "renting via stripe"
 end
 
 
 
 post "/parking/create" do
+	authenticate!
 	if params[:location] && params[:amount] && params[:cost]
-		spot = Spot.new
-		spot.location = params[:location]
-		spot.lots_available = params[:amount]
-		spot.cost_per_lot = params[:cost]
-		spot.save
+		current_user.spots.create(
+			:location => params[:location],
+			:lots_available => params[:amount],
+			:cost_per_lot => params[:cost]
+		)
 	end
 
 	redirect "/parking"

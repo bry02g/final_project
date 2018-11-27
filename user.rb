@@ -16,15 +16,26 @@ class User
     property :password, String
     property :created_at, DateTime
 
+    has n, :spots
+
     def login(password)
     	return self.password == password
     end
 end
 
+class Spot
+    include DataMapper::Resource
+    property :id, Serial
+    property :location, String
+    property :lots_available, Integer
+    property :cost_per_lot, Float
+
+    belongs_to :user
+end
 # Perform basic sanity checks and initialize all relationships
 # Call this when you've defined all your models
 DataMapper.finalize
 
 # automatically create the post table
 User.auto_upgrade!
-
+Spot.auto_upgrade!
