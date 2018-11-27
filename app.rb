@@ -32,6 +32,10 @@ get "/parking/new" do
 end
 
 get "/parking/:id" do
+	if params[:id]
+		@spot = Spot.get(params[:id].to_i)
+		erb :lot
+	end
 end
 
 get "/parking/:id/rent" do
