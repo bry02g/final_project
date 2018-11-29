@@ -1,5 +1,6 @@
 <div class="container">
 
+<<<<<<< HEAD
 	<h1>Hello <%= current_user.email %></h1>
 	<h2>Locations you are renting</h2>
 
@@ -20,5 +21,17 @@
 				<a href="#" class="card-link">remove</a>
 			</div>
 	</div>
+=======
+	<h5>Locations you are renting out</h5>
+	<% @user_lots.each do |lot| %>
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title"><%= lot.location %></h5>
+				<h6 class="card-subtitle mb-2 text-muted">Available spots: <%= lot.lots_available%></h6>
+				<a href="#" class="card-link">Delete</a>
+			</div>
+		</div>
+
+>>>>>>> cfaab12f1cf347edd15522714a523eb0f2b6b9e4
 	<% end %>
 </div>

@@ -15,6 +15,7 @@ require_relative "authentication.rb"
 get "/" do
 	erb :index
 end
+
 # displays all the parking listings
 get "/parking" do
 	@spots = Spot.all
