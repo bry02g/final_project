@@ -1,8 +1,15 @@
 <div class="container">
 	<h1>Dashboard for <%= current_user.email %></h1>
 
-	<p>Locations you are renting</p>
+	<h5>Locations you are renting out</h5>
 	<% @user_lots.each do |lot| %>
-		<p><%= lot.location %>
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title"><%= lot.location %></h5>
+				<h6 class="card-subtitle mb-2 text-muted">Available spots: <%= lot.lots_available%></h6>
+				<a href="#" class="card-link">Delete</a>
+			</div>
+		</div>
+
 	<% end %>
 </div>
