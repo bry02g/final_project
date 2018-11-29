@@ -41,17 +41,32 @@ get '/parking/dashboard/:id' do
 	erb :manage
 end
 
+get "/parking/rented" do
+
+	if current_user.is_renting_spot?
+		@lots_rented = current_user.get_renting_spot
+	end
+
+	erb :rented
+end
+
 # displays a single lot
-get '/parking/:id' do
+get "/parking/:id" do
 	@spot = Spot.get(params[:id].to_i)
 	erb :lot
 end
 
-get "/parking/:id/rent" do
+get "/parking/:id/release" do
 	authenticate!
-	erb :rent
+	current_user.free_spot
+	erb :rented
 end
 
+get "/parking/:id/rent" do
+	authenticate!
+	current_user.rent_spot(params[:id].to_i)
+	erb :rent
+end
 
 
 post "/parking/create" do

@@ -15,12 +15,36 @@ class User
     property :email, String
     property :password, String
     property :created_at, DateTime
-    property :renting_spot_id, Integer
+    property :renting_spot_id, Integer , :default => 0
 
     has n, :spots
 
     def login(password)
     	return self.password == password
+    end
+
+    def is_renting_spot?
+      return self.renting_spot_id != 0
+    end
+
+    def get_renting_spot
+      Spot.get(self.renting_spot_id)
+    end
+
+    def free_spot
+      spot = Spot.get(self.renting_spot_id)
+      spot.lots_available = spot.lots_available + 1
+      spot.save
+      self.renting_spot_id = 0
+      self.save
+    end
+
+    def rent_spot(id)
+      self.renting_spot_id = id
+      spot = Spot.get(id)
+    	spot.lots_available = spot.lots_available - 1
+    	spot.save
+    	self.save
     end
 end
 
@@ -28,6 +52,7 @@ class Spot
     include DataMapper::Resource
     property :id, Serial
     property :location, String
+    property :address, String
     property :lots_available, Integer
     property :cost_per_lot, Float
 
