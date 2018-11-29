@@ -15,6 +15,7 @@ class User
     property :email, String
     property :password, String
     property :created_at, DateTime
+    property :renting_spot_id, Integer
 
     has n, :spots
 

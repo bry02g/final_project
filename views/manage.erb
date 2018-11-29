@@ -1,0 +1,15 @@
+<div class="card" >
+  <img class="card-img-top" src="/images/parking.jpg">
+    <div class="card-body">
+      <h5 class="card-title"><%= @lot.location %></h5>
+      <p class="card-text">full address goes here</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Charging: <%= @lot.cost_per_lot %></li>
+      <li class="list-group-item">spots available: <%= @lot.lots_available %></li>
+    </ul>
+    <div class="card-body">
+      <a href="/parking/dashboard/<%= @lot.id %>" class="card-link">More info</a>
+      <a href="#" class="card-link">remove</a>
+    </div>
+</div>

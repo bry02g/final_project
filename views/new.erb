@@ -1,12 +1,18 @@
 <h1>Making new</h1>
 
-
 <form action="/parking/create" method="post">
-  <label for="">Enter Location</label><br>
-  <textarea name="location"></textarea><br>
-  <label>Number of lots available</label><br>
-  <input type="text" name="amount" /><br>
-  <label>cost per lot</label><br>
-  <input type="text" name="cost"/><br>
-  <input type="submit">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Location</label>
+    <input type="text" name="location" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="address">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Number of Spots</label>
+    <input type="text" name="amount" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="number of spots available">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Cost</label>
+    <input type="text" name="cost" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="cost">
+    <small id="emailHelp" class="form-text text-muted">Enter location address</small>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>

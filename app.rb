@@ -34,6 +34,12 @@ get '/parking/dashboard' do
 	erb :dashboard
 end
 
+
+get '/parking/dashboard/:id' do
+	@lot = Spot.get(params[:id].to_i)
+	erb :manage
+end
+
 # displays a single lot
 get '/parking/:id' do
 	@spot = Spot.get(params[:id].to_i)
@@ -42,7 +48,7 @@ end
 
 get "/parking/:id/rent" do
 	authenticate!
-	return "renting via stripe"
+	erb :rent
 end
 
 
@@ -53,8 +59,7 @@ post "/parking/create" do
 		current_user.spots.create(
 			:location => params[:location],
 			:lots_available => params[:amount],
-			:cost_per_lot => params[:cost]
-		)
+			:cost_per_lot => params[:cost])
 	end
 
 	redirect "/parking"

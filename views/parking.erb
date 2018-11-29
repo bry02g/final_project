@@ -1,7 +1,20 @@
 <h1> Parking Spots </h1>
-<% @spots.each do |spot| %>
-  <p>location: <%= spot.location %></p>
-  <p>spots left: <%= spot.lots_available %></p>
-  <p>cost: <%= spot.cost_per_lot %></p>
-  <p>id: <%= spot.id %> </p>
-<% end %>
+<div class="row">
+  <% @spots.each do |spot| %>
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="images/parking.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Location: <%= spot.location %></h5>
+        <p class="card-text">
+          Spots left: <%= spot.lots_available %><br>
+          Cost: $ <%= spot.cost_per_lot %><br>
+          id: <%= spot.id %> <br>
+          owner: <%= spot.user.email %>
+        </p>
+        <a href="/parking/<%=spot.id %>" class="btn btn-primary">View</a>
+        <a href="/parking/<%=spot.id %>/rent" class="btn btn-primary">Rent</a>
+      </div>
+    </div>
+    <br>
+  <% end %>
+</div>
