@@ -16,7 +16,6 @@ class User
     property :password, String
     property :created_at, DateTime
     property :renting_spot_id, Integer , :default => 0
-
     has n, :spots
 
     def login(password)

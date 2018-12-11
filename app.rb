@@ -37,8 +37,16 @@ end
 
 
 get '/parking/dashboard/:id' do
+	authenticate!
 	@lot = Spot.get(params[:id].to_i)
 	erb :manage
+end
+
+get '/parking/dashboard/:id/delete' do
+	authenticate!
+	@lot = Spot.get(params[:id].to_i)
+	@lot.destroy
+	redirect '/parking/dashboard'
 end
 
 get "/parking/rented" do
@@ -67,6 +75,8 @@ get "/parking/:id/rent" do
 	current_user.rent_spot(params[:id].to_i)
 	erb :rent
 end
+
+
 
 
 post "/parking/create" do
