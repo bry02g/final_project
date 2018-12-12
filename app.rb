@@ -99,7 +99,7 @@ post '/parking/:id/rent' do
 	  :currency    => 'usd',
 	  :customer    => customer.id
 	)
-  
+	current_user.rent_spot(@id)
 	redirect "/parking/rented"
   end
 
