@@ -1,7 +1,12 @@
 require "sinatra"
 require 'sinatra/flash'
+require 'stripe'
 require_relative "authentication.rb"
 
+set :publishable_key, "pk_test_mCY7uTS4r29eFFS2hIgItZmV"
+set :secret_key, "sk_test_8VBkxv3Jf0gcRLbYTCWGhPqD"
+
+Stripe.api_key = settings.secret_key
 
 #the following urls are included in authentication.rb
 # GET /login
@@ -50,7 +55,7 @@ get '/parking/dashboard/:id/delete' do
 end
 
 get "/parking/rented" do
-
+	authenticate!
 	if current_user.is_renting_spot?
 		@lots_rented = current_user.get_renting_spot
 	end
@@ -70,13 +75,33 @@ get "/parking/:id/release" do
 	erb :rented
 end
 
-get "/parking/:id/rent" do
+get '/parking/:id/rent' do
 	authenticate!
-	current_user.rent_spot(params[:id].to_i)
-	erb :rent
+	@id = params[:id].to_i
+	@cost = Spot.get(@id).cost_per_lot
+	erb :rent 
 end
-
-
+post '/parking/:id/rent' do
+	authenticate!
+	spot = Spot.get(params[:id].to_i)
+	# Amount in cents
+	dollars = spot.cost_per_lot.to_i;
+	@amount = (dollars * 60).to_i + (spot.cost_per_lot - dollars).to_i
+  
+	customer = Stripe::Customer.create(
+	  :email => 'customer@example.com',
+	  :source  => params[:stripeToken]
+	)
+  
+	charge = Stripe::Charge.create(
+	  :amount      => @amount,
+	  :description => 'Sinatra Charge',
+	  :currency    => 'usd',
+	  :customer    => customer.id
+	)
+  
+	redirect "/parking/rented"
+  end
 
 
 post "/parking/create" do

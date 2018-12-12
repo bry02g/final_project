@@ -1,2 +1,14 @@
 <h1>renting via stripe</h1>
-<p> Thanks for renting parking lot <%= current_user.get_renting_spot.id %> </p>
+<form action="/parking/<%= @id %>/rent" method="post" class="payment">
+    <article>
+      <label class="amount">
+        <span><%= @cost %></span>
+      </label>
+    </article>
+
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= settings.publishable_key %>"
+            data-description="A month's subscription"
+            data-amount="500"
+            data-locale="auto"></script>
+  </form>
