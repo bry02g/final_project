@@ -23,7 +23,11 @@ class User
     end
 
     def is_renting_spot?
-      return self.renting_spot_id != 0
+      if renting_spot_id == nil || renting_spot_id == 0
+        return false
+      else
+        return true
+      end
     end
 
     def get_renting_spot
