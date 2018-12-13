@@ -3,6 +3,11 @@
   <div class="card-body">
     <h5 class="card-title">Location: <%= @spot.location %></h5>
     <p class="card-text">
+      <%if @spot.address != nil %>
+      Address: <%= @spot.address %><br>
+      <%else%>
+      <strong>Address not listed</strong><br>
+      <%end%>
       Spots left: <%= @spot.lots_available %><br>
       Cost: $ <%= @spot.cost_per_lot %><br>
       id: <%= @spot.id %> <br>

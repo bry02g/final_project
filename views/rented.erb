@@ -5,7 +5,8 @@
     <div class="card-body">
       <h5 class="card-title"><%= current_user.get_renting_spot.location %></h5>
       <h6 class="card-subtitle mb-2 text-muted">$<%= current_user.get_renting_spot.cost_per_lot %></h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <p class="card-text">Spot available at: </br><strong><%= current_user.get_renting_spot.address %></strong></p>
+      <a href="/parking/<%= current_user.get_renting_spot.id %>" class="card-link">View</a>
       <a href="/parking/<%= current_user.get_renting_spot.id %>/release" class="card-link">Release</a>
     </div>
   </div>
