@@ -111,7 +111,8 @@ post "/parking/create" do
 		current_user.spots.create(
 			:location => params[:location],
 			:lots_available => params[:amount],
-			:cost_per_lot => params[:cost])
+			:cost_per_lot => params[:cost],
+			:address => params[:address])
 	end
 
 	redirect "/parking"
